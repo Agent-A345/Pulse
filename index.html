@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pulse — Social Feed</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- Top Bar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-logo">
+        <span class="logo-mark">◆</span>
+        <span class="logo-text">Pulse</span>
+      </div>
+
+      <div class="topbar-search">
+        <span class="search-icon">⌕</span>
+        <input type="text" id="searchInput" placeholder="Search posts, hashtags, people…" autocomplete="off" />
+        <button class="search-clear hidden" id="searchClear">✕</button>
+      </div>
+
+      <div class="topbar-actions">
+        <button class="feed-toggle" id="feedToggle" title="Switch feed mode">
+          <span class="toggle-icon">⚡</span>
+          <span class="toggle-label">Algorithmic</span>
+        </button>
+        <button class="icon-btn theme-btn" id="themeToggle" title="Toggle dark mode">🌙</button>
+        <button class="icon-btn notif-btn" id="notifBtn" title="Notifications">
+          🔔
+          <span class="notif-badge hidden" id="notifBadge">0</span>
+        </button>
+        <div class="avatar-wrap">
+          <div class="avatar avatar-you" title="You">Y</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notifications Dropdown -->
+    <div class="notif-dropdown hidden" id="notifDropdown">
+      <div class="notif-header">
+        <span>Notifications</span>
+        <button id="clearNotifs">Clear all</button>
+      </div>
+      <div class="notif-list" id="notifList">
+        <p class="notif-empty">No notifications yet</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Stories Bar -->
+  <div class="stories-wrapper">
+    <div class="stories-bar" id="storiesBar">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+
+  <!-- Story Viewer Modal -->
+  <div class="story-modal hidden" id="storyModal">
+    <div class="story-modal-inner">
+      <div class="story-progress-bar"><div class="story-progress-fill" id="storyProgressFill"></div></div>
+      <button class="story-close" id="storyClose">✕</button>
+      <div class="story-content" id="storyContent"></div>
+    </div>
+  </div>
+
+  <!-- Main Layout -->
+  <main class="layout">
+
+    <!-- Left Sidebar -->
+    <aside class="sidebar sidebar-left">
+      <div class="sidebar-card trends-card">
+        <h3 class="sidebar-title">Trending</h3>
+        <ul class="trends-list" id="trendsList">
+          <li class="trends-empty">No hashtags yet</li>
+        </ul>
+      </div>
+
+      <div class="sidebar-card analytics-card">
+        <h3 class="sidebar-title">Analytics</h3>
+        <div class="analytics-body" id="analyticsBody">
+          <div class="analytics-item">
+            <span class="analytics-label">Top post</span>
+            <span class="analytics-value" id="analyticsTopPost">—</span>
+          </div>
+          <div class="analytics-item">
+            <span class="analytics-label">Top commenter</span>
+            <span class="analytics-value" id="analyticsTopCommenter">—</span>
+          </div>
+          <div class="analytics-item">
+            <span class="analytics-label">Total posts</span>
+            <span class="analytics-value" id="analyticsTotalPosts">0</span>
+          </div>
+          <div class="analytics-item">
+            <span class="analytics-label">Total likes</span>
+            <span class="analytics-value" id="analyticsTotalLikes">0</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Feed -->
+    <section class="feed-section">
+
+      <!-- Create Post -->
+      <div class="create-post-card" id="createPostCard">
+        <div class="create-post-header">
+          <div class="avatar avatar-you">Y</div>
+          <textarea id="postContent" placeholder="What's on your mind? Use #hashtags…" rows="2"></textarea>
+        </div>
+
+        <div class="drop-zone hidden" id="dropZone">
+          <span>📎 Drop image here or click to select</span>
+          <input type="file" id="imageInput" accept="image/*" />
+        </div>
+        <div class="image-preview-wrap hidden" id="imagePreviewWrap">
+          <img id="imagePreview" src="" alt="preview" />
+          <button class="remove-image" id="removeImage">✕</button>
+        </div>
+
+        <div class="create-post-footer">
+          <button class="btn-ghost attach-btn" id="attachBtn">🖼 Photo</button>
+          <button class="btn-primary" id="postBtn">Post</button>
+        </div>
+      </div>
+
+      <!-- Feed Controls -->
+      <div class="feed-meta">
+        <span id="feedModeLabel">Chronological feed</span>
+        <span id="feedCount">0 posts</span>
+      </div>
+
+      <!-- Feed Container -->
+      <div class="feed" id="feed">
+        <div class="feed-empty" id="feedEmpty">
+          <span class="feed-empty-icon">◆</span>
+          <p>No posts yet. Be the first to share something!</p>
+        </div>
+      </div>
+
+      <!-- Infinite Scroll Sentinel -->
+      <div id="scrollSentinel" style="height:1px;"></div>
+    </section>
+
+    <!-- Right Sidebar placeholder (responsive) -->
+    <aside class="sidebar sidebar-right">
+      <div class="sidebar-card who-to-follow">
+        <h3 class="sidebar-title">Suggested</h3>
+        <ul class="suggest-list" id="suggestList"></ul>
+      </div>
+    </aside>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
